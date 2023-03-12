@@ -13,7 +13,7 @@ cloudflareWildcardCert:
   name: &cfCertName {{.WildcardCertName}}
   email: {{.CloudflareEmail}}
   secretRef:
-    name: *certName
+    name: *cfCertName
     key: api-token
   domains: 
     {{- range $v := splitList "," .Domains }}
