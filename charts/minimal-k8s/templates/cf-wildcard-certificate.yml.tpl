@@ -1,4 +1,4 @@
-{{if .Values.cloudflareWildcardCert.enabled }}
+{{- if .Values.cloudflareWildcardCert.enabled }}
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -13,4 +13,4 @@ spec:
   issuerRef:
     name: {{.Values.clusterIssuer.Name}}
     kind: ClusterIssuer
-{{end}}
+{{- end}}

@@ -9,7 +9,7 @@ spec:
       name: {{.Values.clusterIssuer.name}}
       server: https://acme-v02.api.letsencrypt.org/directory
     solvers:
-      {{if .Values.cloudflareWildcardCert.enabled}}
+      {{- if .Values.cloudflareWildcardCert.enabled}}
       - dns01:
           cloudflare:
             email: {{.Values.cloudflareWildcardCert.email}}
@@ -18,10 +18,10 @@ spec:
               key: {{.Values.cloudflareWildcardCert.secretRef.key}}
         selector:
           dnsNames:
-            {{range $v := .Values.cloudflareWildcardCert.domains}}
+            {{- range $v := .Values.cloudflareWildcardCert.domains}}
             - {{$v | squote}}
-            {{ end }}
-      {{end}}
+            {{- end }}
+      {{- end}}
       - http01:
           ingress:
             class: "{{.Values.ingressClass}}"
