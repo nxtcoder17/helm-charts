@@ -1,0 +1,21 @@
+apiVersion: v1
+entries:
+  minimal-k8s:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-03-12T10:25:44.981004032Z"
+    dependencies:
+    - name: cert-manager
+      repository: https://charts.jetstack.io
+      version: v1.11.0
+    - name: ingress-nginx
+      repository: https://kubernetes.github.io/ingress-nginx
+      version: 4.5.2
+    description: A Helm chart for Kubernetes
+    digest: cafef378c38d754b1bb0e772c4250764243f75e6eb6326efafd69999003d0494
+    name: minimal-k8s
+    type: application
+    urls:
+    - https://github.com/nxtcoder17/helm-charts/releases/download/minimal-k8s-0.1.0/minimal-k8s-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-03-12T10:25:44.981010032Z"
