@@ -7,7 +7,7 @@ spec:
     email: {{.Values.clusterIssuer.acmeEmail}}
     privateKeySecretRef:
       name: {{.Values.clusterIssuer.name}}
-      server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory
     solvers:
       {{- if .Values.cloudflareWildcardCert.enabled}}
       - dns01:
