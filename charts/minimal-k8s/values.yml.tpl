@@ -2,22 +2,23 @@ nodeSelector: &nodeSelector {}
 tolerations: &tolerations []
 podLabels: &podLabels {}
 
-ingressClass: nginx
+ingressClass: {{.IngressClassName}}
 
 clusterIssuer:
   name: cluster-issuer
-  acmeEmail: hello@nxtcoder17.me
+  acmeEmail: {{.AcmeEmail}}
 
 cloudflareWildcardCert:
   enabled: false
-  name: &cfCertName cf-wildcard-cert
-  email: <cloudflare-email>
+  name: &cfCertName {{.WildcardCertName}}
+  email: {{.CloudflareEmail}}
   secretRef:
     name: *cfCertName
     key: api-token
-  domains:
-    - 'domain1'
-    - 'domain2'
+  domains: 
+    {{- range $v := splitList "," .Domains }}
+    - {{$v| squote |}}
+    {{- end}}
 
 cert-manager:
   installCRDs: true
@@ -60,7 +61,7 @@ cert-manager:
         memory: 200Mi
 
 ingress-nginx:
-  nameOverride: ingress
+  nameOverride: {{.ingressNginxName}}
   rbac:
     create: true
 
@@ -80,18 +81,18 @@ ingress-nginx:
     dnsPolicy: ClusterFirstWithHostNet
 
     ingressClassByName: true
-    ingressClass: nginx
-    electionID: nginx
+    ingressClass: {{.IngressClassName}}
+    electionID: {{.IngressClassName}}
     ingressClassResource:
       enabled: true
-      name: "nginx"
-      controllerValue: "k8s.io/nginx"
+      name: "{{.IngressClassName}}"
+      controllerValue: "k8s.io/{{.IngressClassName}}"
 
     service:
       type: "ClusterIP"
 
     extraArgs:
-      default-ssl-certificate: "helm-minimal-k8s/cf-wildcard-cert"
+      default-ssl-certificate: "{{.WildcardCertNamespace}}/{{.WildcardCertName}}"
 
     resources:
       requests:

@@ -1,0 +1,17 @@
+version: 3
+
+tasks:
+  compile:
+    env:
+      ingressNginxName: ingress
+      ingressClassName: nginx
+
+      WildcardCertNamespace: helm-minimal-k8s
+      WildcardCertName: cf-wildcard-cert
+      AcmeEmail: "<acme-email>"
+      CloudflareEmail: "<cloudflare-email>"
+      Domains: 'domain1,domain2'
+    dir: 
+    cmds:
+      - |+
+        nxt template parse --missing-key=error -f values.yml.tpl > {{.PWD}}/values.yaml
