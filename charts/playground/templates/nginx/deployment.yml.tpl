@@ -11,8 +11,8 @@ spec:
   template:
     metadata:
       annotations: {{.Values.podAnnotations | toJson }}
+      {{- /* labels: {{ merge .Values.podLabels (dict "app" "nginx") | toJson }} */}}
       labels:
-        {{ .Values.podLabels | toYaml | nindent 8 }}
         app: nginx
     spec:
       containers:
