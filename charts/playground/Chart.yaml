@@ -1,0 +1,6 @@
+apiVersion: v2
+name: Playground
+description: A simple helm chart for some random stuffs
+type: application
+version: 0.1.0
+appVersion: "1.16.0"

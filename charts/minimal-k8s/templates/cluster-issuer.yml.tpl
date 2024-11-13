@@ -9,13 +9,13 @@ spec:
       name: {{.Values.clusterIssuer.name}}
     server: https://acme-v02.api.letsencrypt.org/directory
     solvers:
-      {{- if .Values.cloudflareWildcardCert.enabled}}
+      {{- if .Values.cloudflareWildcardCert.create}}
       - dns01:
           cloudflare:
-            email: {{.Values.cloudflareWildcardCert.email}}
+            email: {{.Values.cloudflareWildcardCert.cloudflareCreds.email}}
             apiTokenSecretRef:
-              name: {{.Values.cloudflareWildcardCert.secretRef.name}}
-              key: {{.Values.cloudflareWildcardCert.secretRef.key}}
+              name: {{.Values.cloudflareWildcardCert.name}}-cf-api-token
+              key: api-token
         selector:
           dnsNames:
             {{- range $v := .Values.cloudflareWildcardCert.domains}}

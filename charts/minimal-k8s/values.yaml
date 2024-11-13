@@ -5,26 +5,47 @@ podLabels: &podLabels {}
 ingressClass: nginx
 
 clusterIssuer:
-  name: cluster-issuer
-  acmeEmail: hello@nxtcoder17.me
+  # -- whether to install cluster issuer
+  create: true
+
+  # -- name of cluster issuer, to be used for issuing wildcard cert
+  name: "cluster-issuer"
+  # -- email that should be used for communicating with letsencrypt services
+  acmeEmail: <acme-email>
 
 cloudflareWildcardCert:
-  enabled: false
-  name: &cfCertName cf-wildcard-cert
-  email: <cloudflare-email>
-  secretRef:
-    name: *cfCertName
-    key: api-token
+  create: false
+
+  # -- name for wildcard cert
+  name: cf-wildcard-cert
+
+  # -- k8s secret where wildcard cert should be stored
+  secretName: cf-wildcard-cert-tls
+
+  # -- cloudflare authz credentials
+  cloudflareCreds:
+    # -- cloudflare authorized email
+    email: <cloudflare-email>
+    # -- cloudflare authorized secret token
+    secretToken: <cloudflare-secret-token>
+
+  # -- list of all SANs (Subject Alternative Names) for which wildcard certs should be created
   domains:
     - 'domain1'
     - 'domain2'
 
+
 cert-manager:
-  installCRDs: true
+  install: true
+  installCRDs: false
 
   extraArgs:
     - "--dns01-recursive-nameservers-only"
     - "--dns01-recursive-nameservers=1.1.1.1:53,8.8.8.8:53"
+
+  startupapicheck:
+    # -- whether to enable startupapicheck, disabling it by default as it unnecessarily increases chart installation time
+    enabled: false
 
   tolerations: *tolerations
   nodeSelector: *nodeSelector
@@ -60,7 +81,6 @@ cert-manager:
         memory: 200Mi
 
 ingress-nginx:
-  nameOverride: ingress
   rbac:
     create: true
 
@@ -91,7 +111,7 @@ ingress-nginx:
       type: "ClusterIP"
 
     extraArgs:
-      default-ssl-certificate: "helm-minimal-k8s/cf-wildcard-cert"
+      default-ssl-certificate: "helm-minimal-k8s/cf-wildcard-cert-tls"
 
     resources:
       requests:

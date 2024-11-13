@@ -3,13 +3,15 @@ version: 3
 tasks:
   compile:
     env:
-      ingressNginxName: ingress
       ingressClassName: nginx
 
+      WildcardCertEnabled: false
       WildcardCertNamespace: helm-minimal-k8s
       WildcardCertName: cf-wildcard-cert
+
       AcmeEmail: "<acme-email>"
       CloudflareEmail: "<cloudflare-email>"
+      CloudflareSecretToken: '<cloudflare-secret-token>'
       Domains: 'domain1,domain2'
     dir: 
     cmds:

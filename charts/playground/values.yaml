@@ -1,0 +1,9 @@
+podLabels: {}
+podAnnotations: {}
+
+nginx:
+  image:
+    repository: "ghcr.io/kloudlite/hub/nginx"
+    tag: "latest"
+    pullPolicy: "IfNotPresent"
+
